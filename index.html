@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#60a5fa">
+</head>
+<body class="dark">
+  <div class="container">
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <h1>Pomodoro</h1>
+
+    <div class="mode-switch">
+      <label>
+        Choose Mode:
+        <select id="modeSelect">
+          <option value="pomodoro">Pomodoro</option>
+          <option value="maxfocus">Max Focus →</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="session-type" id="sessionType">Work Session</div>
+
+    <div class="timer-section">
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress"></div>
+      </div>
+      <div class="timer-display" id="timer">25:00</div>
+    </div>
+
+    <div class="buttons">
+      <button id="startBtn">Start</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <div class="settings">
+      <label>
+        Work (min):
+        <input type="number" id="workTime" value="25" min="1" max="60"/>
+      </label>
+      <label>
+        Break (min):
+        <input type="number" id="breakTime" value="5" min="1" max="30"/>
+      </label>
+    </div>
+  </div>
+
+  <audio id="alarm" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
+
+  <script src="script.js"></script>
+  <script>
+    // راه‌حل نهایی برای همه محیط‌ها (از جمله GitHub Codespaces)
+    document.getElementById('modeSelect').addEventListener('change', function(e) {
+      if (e.target.value === 'maxfocus') {
+        const base = window.location.href.split('?')[0].split('#')[0];
+        const newUrl = base.replace(/index\.html.*$/, '') + 'maxfocus.html';
+        window.location.href = newUrl;
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
